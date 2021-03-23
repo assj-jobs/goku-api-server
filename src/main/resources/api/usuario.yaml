@@ -1,0 +1,186 @@
+swagger: '2.0'
+info:
+  description: Goku | e-Commerce
+  version: 1.0.0
+  title: goku
+host: localhost:8080
+basePath: /api
+tags:
+- name: Goku | E-commerce
+  description: Produtos alimentícios
+schemes:
+- https
+- http
+paths:
+  /user:
+    post:
+      tags: [
+        "Usuário"
+      ]
+      summary: "Criação de usuário da aplicação."
+      operationId: "create"
+      consumes: [
+        "application/json"
+      ]
+      produces: [
+        "application/json"
+      ]
+      parameters:
+        - in: "body"
+          name: Usuario
+          description: "Objeto usuário necessário para inserção"
+          schema:
+            type: "object"
+            $ref: "#/definitions/Usuario"
+      responses:
+        200:
+          description: Usuário criado com sucesso.
+          schema:
+            $ref: "#/definitions/Usuario"
+    put:
+      tags: [
+        "Usuário"
+      ]
+      summary: "Alteração de usuários da aplicação."
+      description: "Alterar dados do usuário do sistema."
+      operationId: "update"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Objeto usuário à ser alterado"
+          required: true
+          schema:
+            $ref: "#/definitions/Usuario"
+      responses:
+        200:
+          description: Usuário criado com sucesso.
+          schema:
+            $ref: "#/definitions/Usuario"
+    get:
+      tags: [
+        "Usuário"
+      ]
+      summary: Retorna lista de usuários cadastrados.
+      description: ""
+      operationId: "findAll"
+      produces: 
+      - "application/json"  
+      responses:
+        200:
+          description: Lista de usuários recuperados.
+          schema: 
+            type: array
+            items: 
+              $ref: "#/definitions/Usuario"   
+  /user/{id}:
+    get:  
+      tags: [
+        "Usuário"
+      ]
+      summary: Recupera usuário pelo id.
+      operationId: "finById"
+      produces:
+      - "application/json"
+      parameters: [
+        {
+          in: "path",
+          name: "id",
+          description: Objeto usuário à ser removido",
+          required: true,
+          type: "integer",
+          format: int64,
+          minimum: 1    
+        }
+      ]
+      responses: 
+        200:
+          description: Usuário recuperado por id.
+          schema: 
+              $ref: "#/definitions/Usuario"   
+    delete:
+      tags: [
+        "Usuário"
+      ]
+      summary: Remover usuário por id.
+      description: "Remover usuário do de acordo com o UserId."
+      operationId: delete
+      parameters: [
+        {
+          in: "path",
+          name: "userId",
+          description: Objeto usuário à ser removido",
+          required: true,
+          type: "integer",
+          format: int64     
+        }
+      ]
+      responses:
+        '200':
+          description: Usuário excluído com sucesso.
+          schema:
+            type: "string"
+definitions:     
+  Usuario:
+    type: "object"
+    required: 
+    - "nome"
+    - "email"
+    - "senha"
+    - "endereco"
+    - "telefone"
+    properties:
+      id:
+        type: "string"
+        example: "eab45104-c835-4bbc-a79b-8b7c0bb3c0e9"
+      nome:
+        type: "string"
+        example: "Antonio Salviano"
+      email:
+        type: "string"
+        example: "contato@agileware.com.br"
+      senha:
+        type: "string"
+      enderecos:
+        type: "array"
+        items:
+          $ref: "#/definitions/Endereco"
+      telefones:
+        type: "array"
+        items:
+          $ref: "#/definitions/Telefone"
+  Endereco:
+    type: "object"
+    required:
+    - "cep"
+    properties:
+      id:
+        type: "integer"
+      logradouro:
+        type: "string"
+      numero:
+        type: "integer"
+      complemento:
+        type: "string"
+      bairro:
+        type: "string"
+      localidade:
+        type: "string"
+      estado:
+        type: "string"
+      cep:
+        type: "integer"
+  Telefone:
+    type: "object"
+    required: 
+    - "nrTelefone"
+    properties:
+      id: 
+        type: "number"
+      ddd: 
+        type: "number"
+      numero: 
+        type: "number"
+      snAtivo: 
+        type: "string"

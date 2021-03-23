@@ -1,0 +1,90 @@
+swagger: '2.0'
+info:
+  description: Goku | e-Commerce
+  version: 1.0.0
+  title: goku
+host: localhost:8080
+basePath: /api
+tags:
+- name: Goku | e-commerce
+  description: Sua refeição completa online.
+schemes:
+- https
+- http
+paths:
+  /address:
+    get:  
+      tags: [
+        "Endereço"
+      ]
+      summary: Recupera endereço de acordo com o logradouro, município e estado(UF).
+      operationId: "findByAddress"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Objeto endereço à ser recuperado"
+          required: true
+          schema:
+            $ref: "#/definitions/Endereco"
+      responses:
+        200:
+          description: Endereço recuperado com sucesso.
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Endereco"
+  /address/{cep}:
+    get:  
+      tags: [
+        "Endereço"
+      ]
+      summary: Recupera endereço pelo cep.
+      operationId: "findByCep"
+      produces:
+      - "application/json"
+      parameters: [
+        {
+          in: "path",
+          name: "cep",
+          description: Código postal",
+          required: true,
+          type: "integer",
+          format: int64,
+          minimum: 1    
+        }
+      ]
+      responses: 
+        200:
+          description: OK
+          schema:
+              $ref: "#/definitions/Endereco"
+definitions:     
+  Endereco:
+    type: "object"
+    required:
+    - "cep"
+    - "logradouro"
+    - "numero"
+    - "complemento"
+    - "bairro"
+    - "localidade"
+    - "estado"
+    properties:
+      id:
+        type: "integer"
+      logradouro:
+        type: "string"
+      numero:
+        type: "integer"
+      complemento:
+        type: "string"
+      bairro:
+        type: "string"
+      localidade:
+        type: "string"
+      estado:
+        type: "string"
+      cep:
+        type: "integer"
