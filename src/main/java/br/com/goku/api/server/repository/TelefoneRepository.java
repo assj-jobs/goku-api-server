@@ -3,6 +3,7 @@ package br.com.goku.api.server.repository;
 import java.math.BigInteger;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import br.com.goku.api.server.model.Telefone;
 
@@ -11,6 +12,7 @@ import br.com.goku.api.server.model.Telefone;
  * 
  * 8 de mar de 2021
  */
+@Repository
 public interface TelefoneRepository extends JpaRepository<Telefone, Long>{
 
     public Telefone findTelefoneByNumero(BigInteger telefone);

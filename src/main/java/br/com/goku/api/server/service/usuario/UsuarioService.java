@@ -5,11 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.keycloak.authorization.client.util.HttpResponseException;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +26,6 @@ import br.com.goku.api.server.repository.UsuarioEnderecoRepository;
 import br.com.goku.api.server.repository.UsuarioPermissaoRepository;
 import br.com.goku.api.server.repository.UsuarioRepository;
 import br.com.goku.api.server.repository.UsuarioTelefoneRepository;
-import io.jsonwebtoken.lang.Collections;
 
 /**
  * @author Antonio Salviano Soares Jr.
@@ -39,8 +35,6 @@ import io.jsonwebtoken.lang.Collections;
 @Service
 @Transactional
 public class UsuarioService implements IUsuarioService {
-
-	private ModelMapper modelMapper = new ModelMapper();
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
@@ -73,6 +67,7 @@ public class UsuarioService implements IUsuarioService {
 			Optional<Usuario> usuarioDB = this.usuarioRepository.findByEmail(usuarioResource.getEmail());
 			if(!usuarioDB.isPresent()) {
 
+				ModelMapper modelMapper = new ModelMapper();
 				usuarioNovo = modelMapper.map(usuarioResource, Usuario.class);
 				usuarioNovo = usuarioRepository.save(usuarioNovo);
 
@@ -156,6 +151,7 @@ public class UsuarioService implements IUsuarioService {
 	}
 
 	private br.com.goku.api.server.resource.Usuario parseUserDBToUserResource(Usuario usuario) {
+		ModelMapper modelMapper = new ModelMapper();
 		List<br.com.goku.api.server.resource.Endereco> enderecos = converterEndereco(usuario);
 		List<br.com.goku.api.server.resource.Telefone> telefones = converterTelefone(usuario);
 		br.com.goku.api.server.resource.Usuario usuarioResource = modelMapper.map(usuario, br.com.goku.api.server.resource.Usuario.class);
@@ -165,6 +161,7 @@ public class UsuarioService implements IUsuarioService {
 	}
 
 	private List<br.com.goku.api.server.resource.Telefone> converterTelefone(Usuario usuario) {
+		ModelMapper modelMapper = new ModelMapper();
 		List<br.com.goku.api.server.resource.Telefone> telefones = usuario.getUsuarioTelefones()
 				.stream()
 				.map(usuarioTelefone -> 
@@ -175,6 +172,7 @@ public class UsuarioService implements IUsuarioService {
 	}
 	
 	private List<br.com.goku.api.server.resource.Endereco> converterEndereco(Usuario usuario) {
+		ModelMapper modelMapper = new ModelMapper();
 		List<br.com.goku.api.server.resource.Endereco> enderecos = usuario.getUsuarioEnderecos()
 				.stream()
 				.map(usuarioEndereco -> 
@@ -185,6 +183,7 @@ public class UsuarioService implements IUsuarioService {
 
 	private List<UsuarioEndereco> setarListaEnderecos(br.com.goku.api.server.resource.Usuario usuarioResource,
 			Usuario usuario) {
+		ModelMapper modelMapper = new ModelMapper();
 		List<UsuarioEndereco> usuarioEnderecos = new ArrayList<UsuarioEndereco>();
 		for (br.com.goku.api.server.resource.Endereco end : usuarioResource.getEnderecos()) {
 			UsuarioEndereco ue = new UsuarioEndereco();
@@ -200,6 +199,7 @@ public class UsuarioService implements IUsuarioService {
 
 	private List<UsuarioTelefone> setarListaTelefones(br.com.goku.api.server.resource.Usuario usuarioResource,
 			Usuario usuario) {
+		ModelMapper modelMapper = new ModelMapper();
 		List<UsuarioTelefone> usuarioTelefones = new ArrayList<UsuarioTelefone>();
 		for (br.com.goku.api.server.resource.Telefone tel : usuarioResource.getTelefones()) {
 			UsuarioTelefone usuarioTelefone = new UsuarioTelefone();

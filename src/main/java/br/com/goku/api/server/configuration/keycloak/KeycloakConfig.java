@@ -13,12 +13,12 @@ import org.keycloak.admin.client.KeycloakBuilder;
  */
 public class KeycloakConfig {
 	static Keycloak keycloak = null;
-    final static String serverUrl = "http://54.165.133.5:8080/auth";
+    final static String serverUrl = "https://goku-keycloak.herokuapp.com/auth";
 	final static String realm = "goku";
     final static String clientId = "goku-web-client";
-    final static String clientSecret = "cdda0d69-d067-4e97-a22d-8a62966f3ccb";
+    final static String clientSecret = "5e7ba75f-cc8f-4064-8f0f-26d63e0fd249";
     final static String userName = "administrator";
-    final static String password = "123456";
+    final static String password = "qwerty1234";
 
 	public KeycloakConfig() {
     }
